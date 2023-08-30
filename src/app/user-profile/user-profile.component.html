@@ -1,0 +1,9 @@
+<p>user-profile works!</p>
+<div class="user-profile">
+  <img [src]="user.profileImageUrl" alt="{{ user.username }}">
+  <h2>{{ user.username }}</h2>
+  <p>Lista de animes:</p>
+  <ul>
+    <li *ngFor="let anime of user.animeList">{{ anime.title }}</li>
+  </ul>
+</div>
