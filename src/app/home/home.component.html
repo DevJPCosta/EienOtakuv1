@@ -1,7 +1,11 @@
-<p>home works!</p>
 <div class="home">
-  <h2>Os Animes Mais Bem Avaliados</h2>
+  <h1>Bem-vindo ao EienOtaku!</h1>
+
   <div class="anime-list">
-    <!-- Exibir lista de animes aqui -->
+    <div *ngFor="let anime of topAnimes" class="anime">
+      <img [src]="anime.image" alt="{{ anime.title }}">
+      <h2>{{ anime.title }}</h2>
+      <p>{{ anime.description }}</p>
+    </div>
   </div>
 </div>

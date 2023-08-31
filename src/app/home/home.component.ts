@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { AnimeService } from '../services/anime.Service'; // Importe o serviço que obtém informações dos animes
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-  topRatedAnimes: any[] = []; // Array para armazenar os animes mais bem avaliados
-
-  constructor(private animeService: AnimeService) { }
-
-  ngOnInit(): void {
-    // Ao inicializar o componente, carregue os animes mais bem avaliados
-    this.topRatedAnimes = this.animeService.getTopRatedAnimes();
-  }
+export class HomeComponent {
+  topAnimes = [
+    { title: 'Anime 1', description: 'Descrição do Anime 1', image: 'URL_da_imagem' },
+    { title: 'Anime 2', description: 'Descrição do Anime 2', image: 'URL_da_imagem' },
+    // ... outros animes
+  ];
 }

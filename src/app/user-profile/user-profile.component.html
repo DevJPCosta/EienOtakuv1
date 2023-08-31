@@ -1,9 +1,11 @@
-<p>user-profile works!</p>
 <div class="user-profile">
-  <img [src]="user.profileImageUrl" alt="{{ user.username }}">
-  <h2>{{ user.username }}</h2>
-  <p>Lista de animes:</p>
+  <h2>Perfil do Usuário</h2>
+
+  <!-- Formulários de login e cadastro -->
+
+  <h3>Lista de Animes Marcados</h3>
   <ul>
-    <li *ngFor="let anime of user.animeList">{{ anime.title }}</li>
+    <li *ngFor="let anime of markedAnimes">{{ anime.title }}</li>
   </ul>
+  <app-user-registration></app-user-registration>
 </div>

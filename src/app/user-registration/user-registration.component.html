@@ -1,0 +1,48 @@
+<div class="registration">
+  <h2>Cadastro de Usuário</h2>
+  <form [formGroup]="registrationForm" (ngSubmit)="registerUser()">
+    <label for="username">Nome de Usuário:</label>
+    <input type="text" id="username" formControlName="username">
+    <div *ngIf="registrationForm.get('username').errors?.required && (registrationForm.get('username').dirty || registrationForm.get('username').touched)">
+      O nome de usuário é obrigatório.
+    </div>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+    <div *ngIf="registrationForm.get('email').errors?.required && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
+      O email é obrigatório.
+    </div>
+    <div *ngIf="registrationForm.get('email').errors?.email && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
+      Insira um email válido.
+    </div>
+
+    <label for="password">Senha:</label>
+    <input type="password" id="password" formControlName="password">
+    <div *ngIf="registrationForm.get('password').errors?.required && (registrationForm.get('password').dirty || registrationForm.get('password').touched)">
+      A senha é obrigatória.
+    </div>
+    <div *ngIf="registrationForm.get('password').errors?.pattern && (registrationForm.get('password').dirty || registrationForm.get('password').touched)">
+      A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial, e ter pelo menos 8 caracteres.
+    </div>
+
+    <label for="confirmPassword">Confirmação de Senha:</label>
+    <input type="password" id="confirmPassword" formControlName="confirmPassword">
+    <div *ngIf="registrationForm.get('confirmPassword').errors?.required && (registrationForm.get('confirmPassword').dirty || registrationForm.get('confirmPassword').touched)">
+      A confirmação de senha é obrigatória.
+    </div>
+    <div *ngIf="registrationForm.hasError('passwordMismatch') && (registrationForm.get('confirmPassword').dirty || registrationForm.get('confirmPassword').touched)">
+      As senhas não coincidem.
+    </div>
+
+    <label for="userId">ID Único:</label>
+    <input type="text" id="userId" formControlName="userId">
+    <div *ngIf="registrationForm.get('userId').errors?.required && (registrationForm.get('userId').dirty || registrationForm.get('userId').touched)">
+      O ID é obrigatório.
+    </div>
+    <div *ngIf="(registrationForm.get('userId').errors?.minlength || registrationForm.get('userId').errors?.maxlength) && (registrationForm.get('userId').dirty || registrationForm.get('userId').touched)">
+      O ID deve ter entre 3 e 16 caracteres.
+    </div>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+</div>
