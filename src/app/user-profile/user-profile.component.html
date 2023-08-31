@@ -1,11 +1,17 @@
 <div class="user-profile">
   <h2>Perfil do Usuário</h2>
-
-  <!-- Formulários de login e cadastro -->
-
-  <h3>Lista de Animes Marcados</h3>
-  <ul>
-    <li *ngFor="let anime of markedAnimes">{{ anime.title }}</li>
+  <div class="user-info">
+    <div class="profile-image">
+      <img [src]="loggedInUser.profileImageUrl" alt="Imagem de Perfil">
+    </div>
+    <div class="profile-details">
+      <p><strong>Nome de Usuário:</strong> {{ loggedInUser.username }}</p>
+      <p><strong>Email:</strong> {{ loggedInUser.email }}</p>
+      <!-- Adicione mais detalhes do perfil aqui -->
+    </div>
+  </div>
+  <h3>Animes Marcados</h3>
+  <ul class="anime-list">
+    <li *ngFor="let anime of markedAnimes">{{ anime.title }} - Status: {{ anime.status }}</li>
   </ul>
-  <app-user-registration></app-user-registration>
 </div>

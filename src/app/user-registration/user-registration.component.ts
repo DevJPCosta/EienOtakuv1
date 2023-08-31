@@ -1,7 +1,7 @@
+import { UserService } from './../services/user.Service';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
@@ -10,7 +10,11 @@ import { Router } from '@angular/router';
 export class UserRegistrationComponent {
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService
+  ) {
     this.registrationForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -22,9 +26,22 @@ export class UserRegistrationComponent {
 
   registerUser() {
     if (this.registrationForm.valid) {
-      // Lógica de registro aqui (enviar para um serviço de autenticação, por exemplo)
-      // Após o registro, você pode redirecionar para a página do usuário
-      this.router.navigate(['/user']);
+      const username = this.registrationForm.get('username')?.value;
+      const email = this.registrationForm.get('email')?.value;
+      const password = this.registrationForm.get('password')?.value;
+      const confirmPassword = this.registrationForm.get('confirmPassword')?.value;
+
+      if (password !== confirmPassword) {
+        this.registrationForm.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+        return; // Senha e confirmação de senha não coincidem
+      }
+
+      if (this.userService.registerUser(username, email, password, confirmPassword)) {
+        // Registro bem-sucedido, redirecione para a página do usuário
+        this.router.navigate(['/user']);
+      } else {
+        // Exiba uma mensagem de erro informando que o registro falhou
+      }
     }
   }
 }
