@@ -1,4 +1,7 @@
 {
+  "projects": {
+    "default": "eienotaku-5ce77"
+  },
   "targets": {
     "eienotaku-5ce77": {
       "hosting": {
@@ -8,7 +11,5 @@
       }
     }
   },
-  "projects": {
-    "default": "eienotaku-5ce77"
-  }
+  "etags": {}
 }

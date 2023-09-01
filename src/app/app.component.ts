@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-home',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'EienOtaku';
+  topAnimes = [
+    { title: 'Anime 1', description: 'Descrição do Anime 1', image: 'URL_da_imagem' },
+    { title: 'Anime 2', description: 'Descrição do Anime 2', image: 'URL_da_imagem' },
+    // ... outros animes
+  ];
 }
