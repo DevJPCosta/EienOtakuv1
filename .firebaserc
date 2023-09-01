@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "eienotaku-5ce77": {
+      "hosting": {
+        "EienOtaku": [
+          "eienotaku"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "eienotaku-5ce77"
+  }
+}
