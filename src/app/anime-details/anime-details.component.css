@@ -19,3 +19,10 @@
     margin-top: 10px;
   }
 }
+
+/* Adicione um estilo para a mensagem de "Anime não encontrado" */
+.anime-details .not-found {
+  font-size: 20px;
+  margin-top: 20px;
+  color: red;
+}
