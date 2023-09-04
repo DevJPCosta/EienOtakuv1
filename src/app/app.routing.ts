@@ -6,10 +6,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
-const routes: Routes = [
+const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'user', component: UserProfileComponent },
-  { path: 'anime', component: AnimeDetailsComponent },
+  { path: 'anime-details', component: AnimeDetailsComponent },
   // Adicione mais rotas para outras páginas aqui
 
   // Rota padrão redireciona para a página inicial
@@ -20,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

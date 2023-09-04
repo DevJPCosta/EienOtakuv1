@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "EienOtaku",
+      "target": "eienotaku",
       "source": ".",
       "frameworksBackend": {}
     }

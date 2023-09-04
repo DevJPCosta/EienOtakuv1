@@ -1,18 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AnimeService } from './services/anime.Service'; // Substitua pelo caminho real para o AnimeService
-import { Observable, from } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  topAnimes$: Observable<any[]> | undefined;
-
-  constructor(private animeService: AnimeService) {}
-
-  ngOnInit(): void {
-    this.topAnimes$ = from(this.animeService.getTopRatedAnimes());
-  }
+export class AppComponent {
+  title = 'EienOtaku'; // Atualize o título da sua aplicação, se necessário
 }

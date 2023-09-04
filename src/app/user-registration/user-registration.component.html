@@ -53,6 +53,11 @@
       </div>
     </div>
 
+    <!-- Exibir mensagem de erro de registro -->
+    <div *ngIf="registrationError" class="error-message">
+      {{ registrationError }}
+    </div>
+
     <button type="submit" class="btn btn-primary">Cadastrar</button>
   </form>
 </div>

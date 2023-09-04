@@ -1,0 +1,11 @@
+<div class="App">
+  <h1>Bem-vindo ao EienOtaku!</h1>
+  <router-outlet></router-outlet>
+  <div class="anime-list">
+    <div *ngFor="let anime of topAnimes$ | async" class="anime">
+      <img [src]="anime.imageUrl" alt="{{ anime.title }}">
+      <h2>{{ anime.title }}</h2>
+      <p>{{ anime.description }}</p>
+    </div>
+  </div>
+</div>

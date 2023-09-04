@@ -5,7 +5,7 @@
   "targets": {
     "eienotaku-5ce77": {
       "hosting": {
-        "EienOtaku": [
+        "eienotaku": [
           "eienotaku"
         ]
       }

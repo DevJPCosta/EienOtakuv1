@@ -1,26 +1,27 @@
+/* Estilos para o componente 'anime-details' */
 .anime-details {
   text-align: center;
   padding: 20px;
   color: white;
-
-  img {
-    max-width: 100%;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  h2 {
-    font-size: 24px;
-    margin-top: 10px;
-  }
-
-  p {
-    font-size: 16px;
-    margin-top: 10px;
-  }
 }
 
-/* Adicione um estilo para a mensagem de "Anime não encontrado" */
+.anime-details img {
+  max-width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.anime-details h2 {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.anime-details p {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Estilo para a mensagem "Anime não encontrado" */
 .anime-details .not-found {
   font-size: 20px;
   margin-top: 20px;

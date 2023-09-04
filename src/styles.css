@@ -1,1 +1,194 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos globais do aplicativo */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1e1e1e;
+  color: white;
+}
+
+/* Estilos para o componente 'App' */
+.App {
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+.App h1 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+.App h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.App .anime-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.App .anime-list .anime-card {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.App .anime-list .anime-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.App .anime-list .anime-card h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.App .anime-list .anime-card p {
+  font-size: 14px;
+}
+
+/* Estilo para a mensagem "Anime não encontrado" */
+.App .not-found {
+  font-size: 20px;
+  margin-top: 20px;
+  color: red;
+}
+
+/* Estilos para o componente 'anime-details' */
+.anime-details {
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+.anime-details img {
+  max-width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.anime-details h2 {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.anime-details p {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Estilo para a mensagem "Anime não encontrado" */
+.anime-details .not-found {
+  font-size: 20px;
+  margin-top: 20px;
+  color: red;
+}
+
+/* Estilos para o componente 'user-profile' */
+.user-profile {
+  .user-profile {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: #fff;
+  }
+
+  .user-profile h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .user-profile .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .user-profile .profile-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+
+  .user-profile .anime-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .user-profile .anime-list li {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+}
+
+/* Estilos para o componente 'user-registration' */
+.user-registration {
+  .registration {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: #fff;
+  }
+
+  .registration h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .registration label {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .registration input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #505050;
+    border-radius: 6px;
+    background-color: #282828;
+    color: #fff;
+  }
+
+  .registration input:focus {
+    border-color: #ff6600;
+  }
+
+  .registration .form-group {
+    margin-bottom: 20px;
+  }
+
+  .registration .error-message {
+    color: #ff3333;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .registration button {
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .registration button:hover {
+    background-color: #ff8000;
+  }
+}

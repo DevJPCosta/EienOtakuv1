@@ -1,0 +1,23 @@
+[
+  {
+    "username": "joao123",
+    "email": "joao123@example.com",
+    "password": "hashed_password",
+    "profileImageUrl": "joao123.jpg",
+    "animeList": []
+  },
+  {
+    "username": "maria456",
+    "email": "maria456@example.com",
+    "password": "hashed_password",
+    "profileImageUrl": "maria456.jpg",
+    "animeList": []
+  },
+  {
+    "username": "carlos789",
+    "email": "carlos789@example.com",
+    "password": "hashed_password",
+    "profileImageUrl": "carlos789.jpg",
+    "animeList": []
+  }
+]

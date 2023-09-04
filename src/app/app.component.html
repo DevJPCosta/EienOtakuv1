@@ -1,11 +1,15 @@
-<div class="App">
-  <h1>Bem-vindo ao EienOtaku!</h1>
-
-  <div class="anime-list">
-    <div *ngFor="let anime of topAnimes$ | async" class="anime">
-      <img [src]="anime.imageUrl" alt="{{ anime.title }}">
-      <h2>{{ anime.title }}</h2>
-      <p>{{ anime.description }}</p>
-    </div>
+<title>EienOtaku</title>
+<nav>
+  <div class="nav-wrapper">
+    <a routerLink="/" class="brand-logo right">EienOtaku</a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/user">Perfil do Usuário</a></li>
+      <li><a routerLink="/anime-details">Detalhes do Anime</a></li> <!-- Corrigido para "anime-details" -->
+      <!-- Adicione mais itens de menu para outras páginas aqui -->
+    </ul>
   </div>
-<router-outlet></router-outlet>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
