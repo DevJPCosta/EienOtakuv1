@@ -17,28 +17,37 @@ export class AnimeService {
 
   constructor(private firestore: Firestore) {}
 
-  async getTopRatedAnimes(): Promise<Anime[]> {
-    try {
-      const animeDocs = await getDocs(this.animeCollection);
-      return animeDocs.docs.map(doc => doc.data() as Anime);
-    } catch (error) {
-      console.error('Erro ao buscar animes:', error);
-      return [];
-    }
+  getTopRatedAnimes(): Observable<Anime[]> {
+    return new Observable<Anime[]>(observer => {
+      getDocs(this.animeCollection)
+        .then(animeDocs => {
+          const animeData = animeDocs.docs.map(doc => doc.data() as Anime);
+          observer.next(animeData);
+          observer.complete();
+        })
+        .catch(error => {
+          console.error('Erro ao buscar animes:', error);
+          observer.error('Erro ao buscar animes');
+        });
+    });
   }
 
-  async getAnimeDetails(animeId: number): Promise<Anime | null> {
-    try {
-      const animeDoc = doc(this.animeCollection, animeId.toString());
-      const animeSnap = await getDoc(animeDoc);
-      if (animeSnap.exists()) {
-        return animeSnap.data() as Anime;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error('Erro ao buscar detalhes do anime:', error);
-      return null;
-    }
+  getAnimeDetails(animeId: number): Observable<Anime | null> {
+    const animeDoc = doc(this.animeCollection, animeId.toString());
+    return new Observable<Anime | null>(observer => {
+      getDoc(animeDoc)
+        .then(animeSnap => {
+          if (animeSnap.exists()) {
+            observer.next(animeSnap.data() as Anime);
+          } else {
+            observer.next(null);
+          }
+          observer.complete();
+        })
+        .catch(error => {
+          console.error('Erro ao buscar detalhes do anime:', error);
+          observer.error('Erro ao buscar detalhes do anime');
+        });
+    });
   }
 }

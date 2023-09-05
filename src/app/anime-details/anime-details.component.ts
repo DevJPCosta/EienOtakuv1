@@ -15,17 +15,14 @@ export class AnimeDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const animeId = this.route.snapshot.paramMap.get('id');
 
     if (animeId) {
-      this.animeService.getAnimeDetails(+animeId).then((anime: any | null) => {
-        if (anime) {
-          this.anime = anime;
-        } else {
-          console.error('Anime não encontrado.');
-        }
-      });
+      this.anime = await this.animeService.getAnimeDetails(+animeId);
+      if (!this.anime) {
+        console.error('Anime não encontrado.');
+      }
     } else {
       console.error('ID do anime não fornecido.');
     }
