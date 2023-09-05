@@ -4,11 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'user', component: UserProfileComponent },
+  { path: 'register', component: UserRegistrationComponent },
   { path: 'anime', component: AnimeDetailsComponent },
   // Adicione mais rotas para outras páginas aqui
 
