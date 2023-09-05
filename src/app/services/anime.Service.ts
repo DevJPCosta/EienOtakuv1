@@ -11,9 +11,7 @@ interface Anime {
   rating: number;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AnimeService {
   private animeCollection = collection(this.firestore, 'animes');
 

@@ -14,6 +14,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { HomeComponent } from './home/home.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
+import { ServicesModule } from './services/services.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    ServicesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
