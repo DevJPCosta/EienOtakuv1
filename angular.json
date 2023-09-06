@@ -91,18 +91,8 @@
             ],
             "scripts": []
           }
-        },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {
-            "version": 2,
-            "browserTarget": "EienOtaku:build:production"
-          }
         }
       }
     }
-  },
-  "cli": {
-    "analytics": "bd683c42-ca4d-428d-8589-676901db0321"
   }
 }
