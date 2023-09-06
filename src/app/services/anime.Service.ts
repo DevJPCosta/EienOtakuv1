@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, doc, getDoc, getDocs } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Firestore, collection, doc, getDoc, getDocs, DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { Observable, of, from } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 interface Anime {
   id: number;
@@ -11,43 +11,38 @@ interface Anime {
   rating: number;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AnimeService {
   private animeCollection = collection(this.firestore, 'animes');
 
   constructor(private firestore: Firestore) {}
 
   getTopRatedAnimes(): Observable<Anime[]> {
-    return new Observable<Anime[]>(observer => {
-      getDocs(this.animeCollection)
-        .then(animeDocs => {
-          const animeData = animeDocs.docs.map(doc => doc.data() as Anime);
-          observer.next(animeData);
-          observer.complete();
-        })
-        .catch(error => {
-          console.error('Erro ao buscar animes:', error);
-          observer.error('Erro ao buscar animes');
-        });
-    });
+    return from(getDocs(this.animeCollection)).pipe(
+      map((animeDocs: QuerySnapshot) => animeDocs.docs.map((doc) => doc.data() as Anime)),
+      catchError((error) => {
+        console.error('Erro ao buscar animes:', error);
+        return of([]); // Retorna um array vazio em caso de erro
+      })
+    );
   }
 
   getAnimeDetails(animeId: number): Observable<Anime | null> {
     const animeDoc = doc(this.animeCollection, animeId.toString());
-    return new Observable<Anime | null>(observer => {
-      getDoc(animeDoc)
-        .then(animeSnap => {
-          if (animeSnap.exists()) {
-            observer.next(animeSnap.data() as Anime);
-          } else {
-            observer.next(null);
-          }
-          observer.complete();
-        })
-        .catch(error => {
-          console.error('Erro ao buscar detalhes do anime:', error);
-          observer.error('Erro ao buscar detalhes do anime');
-        });
-    });
+    return from(getDoc(animeDoc)).pipe(
+      map((animeSnap: DocumentSnapshot) => {
+        if (animeSnap.exists()) {
+          return animeSnap.data() as Anime;
+        } else {
+          return null;
+        }
+      }),
+      catchError((error) => {
+        console.error('Erro ao buscar detalhes do anime:', error);
+        return of(null); // Retorna nulo em caso de erro
+      })
+    );
   }
 }
