@@ -11,14 +11,15 @@ import { HomeComponent } from './home/home.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 // Importações do Firebase
-import { FirebaseApp, FirebaseOptions } from '@angular/fire/app';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { FirebaseApp, provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth, Auth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore, Firestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage, Storage } from '@angular/fire/storage';
+import { FirebaseOptions } from 'firebase/app';
 
 import { ServicesModule } from './services/services.module';
 import { environment } from 'src/environments/environment';
+import { firebaseConfig } from '../environments/environment.firebase';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,16 @@ import { environment } from 'src/environments/environment';
     ServicesModule,
   ],
   providers: [
+    {
+      provide: 'FirebaseConfig',
+      useValue: environment.firebase as FirebaseOptions,
+    },
+    {
+      provide: FirebaseApp,
+      useFactory: () => {
+        return initializeFirebaseApp(environment.firebase);
+      }
+    },
     {
       provide: Auth,
       useFactory: () => {
@@ -56,17 +67,14 @@ import { environment } from 'src/environments/environment';
         const storage = getStorage();
         return storage;
       },
-    },  {
-      provide: FirebaseApp,
-      useFactory: () => {
-        return initializeFirebaseApp(environment.firebase);
-      }
     },
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-export function initializeFirebaseApp(firebaseOptions: FirebaseOptions): FirebaseApp {
-  return initializeApp(firebaseOptions);
+
+function initializeFirebaseApp ( firebase: { projectId: string; appId: string; storageBucket: string; locationId: string; apiKey: string; authDomain: string; messagingSenderId: string; measurementId: string; } )
+{
+  throw new Error( 'Function not implemented.' );
 }
 
