@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AnimeService } from '../services/anime.Service';
+import { AnimeService } from '../services/anime.Service'; // Importe o AnimeService aqui
+import { ANIME_SERVICE } from '../services/anime-service.token';
 
 @Component({
   selector: 'app-anime-details',
@@ -11,7 +12,7 @@ export class AnimeDetailsComponent implements OnInit {
   anime: any;
 
   constructor(
-    private animeService: AnimeService,
+    @Inject(ANIME_SERVICE) private animeService: AnimeService, // Injete o AnimeService usando o token do anime
     private route: ActivatedRoute
   ) {}
 

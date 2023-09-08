@@ -1,14 +1,5 @@
-<title>EienOtaku</title>
-<nav>
-  <div class="nav-wrapper">
-    <a routerLink="/" class="brand-logo right">EienOtaku</a>
-    <ul>
-      <li><a routerLink="/home">Home</a></li>
-      <li><a routerLink="/user">Perfil do Usuário</a></li>
-      <li><a routerLink="/anime">Detalhes do Anime</a></li>
-    </ul>
-  </div>
-</nav>
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="header">
+  <h1>{{ title }}</h1>
+  <button *ngIf="!isLoggedIn" (click)="login()">Login</button>
+  <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
 </div>

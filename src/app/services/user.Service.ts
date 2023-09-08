@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UserService {
   private loggedInUser: any;
 
@@ -10,14 +9,14 @@ export class UserService {
     this.loggedInUser = null;
   }
 
-  registerUser(username: string, email: string, password: string, confirmPassword: string): boolean {
+  registerUser(username: string, email: string, password: string, confirmPassword: string): Observable<boolean> {
     if (password !== confirmPassword) {
-      return false; // Senha e confirmação de senha não são iguais
+      return of(false); // Senha e confirmação de senha não são iguais
     }
 
     // Realize as validações adicionais necessárias, como verificar se o nome de usuário e o email já estão em uso
 
-    // Simule o cadastro do usuário
+    // Simule o cadastro do usuário (substitua isso por chamadas reais)
     this.loggedInUser = {
       id: 1,
       username: username,
@@ -26,18 +25,18 @@ export class UserService {
       animeList: []
     };
 
-    return true; // Cadastro bem-sucedido
+    return of(true); // Cadastro bem-sucedido
   }
 
-  loginUser(username: string, password: string): boolean {
+  loginUser(username: string, password: string): Observable<boolean> {
     // Verifique se o usuário já está logado
     if (this.isLoggedIn()) {
-      return true; // Usuário já está logado
+      return of(true); // Usuário já está logado
     }
 
     // Realize as validações de login, como verificar se o nome de usuário e senha correspondem
 
-    // Simule a verificação de credenciais
+    // Simule a verificação de credenciais (substitua isso por chamadas reais)
     if (username === 'user123' && password === 'password123') {
       this.loggedInUser = {
         id: 1,
@@ -46,9 +45,9 @@ export class UserService {
         profileImageUrl: 'user123.jpg',
         animeList: []
       };
-      return true; // Login bem-sucedido
+      return of(true); // Login bem-sucedido
     } else {
-      return false; // Credenciais inválidas
+      return of(false); // Credenciais inválidas
     }
   }
 
@@ -60,27 +59,28 @@ export class UserService {
     return this.loggedInUser !== null;
   }
 
-  getLoggedInUser(): any {
-    return this.loggedInUser;
+  getLoggedInUser(): Observable<any> {
+    return of(this.loggedInUser); // Simplesmente retorna o usuário logado (pode ser vazio se não estiver logado)
   }
 
-  markAnime(anime: string, status: string): void {
+  markAnime(anime: string, status: string): Observable<void> {
     if (!this.isLoggedIn()) {
-      return; // Não é possível marcar um anime se o usuário não estiver logado
+      return of(); // Não é possível marcar um anime se o usuário não estiver logado
     }
 
     // Realize as validações e lógica adicionais para marcar o anime para o usuário logado
     // Por exemplo, verifique se o anime já está marcado ou se o status é válido
 
-    // Simule a marcação do anime
+    // Simule a marcação do anime (substitua isso por chamadas reais)
     this.loggedInUser.animeList.push({ title: anime, status: status });
+    return of(); // Marcação bem-sucedida
   }
 
-  getMarkedAnimes(): any[] {
+  getMarkedAnimes(): Observable<any[]> {
     if (!this.isLoggedIn()) {
-      return []; // Se nenhum usuário estiver logado, retorne uma lista vazia
+      return of([]); // Se nenhum usuário estiver logado, retorne uma lista vazia
     }
 
-    return this.loggedInUser.animeList;
+    return of(this.loggedInUser.animeList); // Simplesmente retorna a lista de animes marcados pelo usuário
   }
 }

@@ -7,11 +7,11 @@
     <div class="profile-details">
       <p><strong>Nome de Usuário:</strong> {{ loggedInUser.username }}</p>
       <p><strong>Email:</strong> {{ loggedInUser.email }}</p>
-      <!-- Adicione mais detalhes do perfil aqui -->
+      <!-- Adicione mais detalhes do perfil aqui se necessário -->
     </div>
   </div>
   <h3>Animes Marcados</h3>
-  <ul class="anime-list">
+  <ul class="anime-list" *ngIf="markedAnimes$ | async as markedAnimes">
     <li *ngFor="let anime of markedAnimes">{{ anime.title }} - Status: {{ anime.status }}</li>
   </ul>
 </div>

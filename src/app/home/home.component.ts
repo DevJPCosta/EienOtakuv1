@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AnimeService } from '../services/anime.Service'; // Importe o serviço com o caminho correto
-import { Observable, from } from 'rxjs';
+import { Component, OnInit, Inject } from '@angular/core';
+import { AnimeService } from '../services/anime.Service'; // Importe o AnimeService aqui
+import { ANIME_SERVICE } from '../services/anime-service.token'; // Importe o token do anime
+import { Observable } from 'rxjs/internal/Observable';
+import { from } from 'rxjs/internal/observable/from';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,9 @@ import { Observable, from } from 'rxjs';
 export class HomeComponent implements OnInit {
   topAnimes$: Observable<any[]> | undefined;
 
-  constructor(private animeService: AnimeService) {}
+  constructor(
+    @Inject(ANIME_SERVICE) private animeService: AnimeService, // Injete o AnimeService usando o token do anime
+  ) {}
 
   ngOnInit(): void {
     // Use o operador 'from' do RxJS para converter a promessa em um Observable

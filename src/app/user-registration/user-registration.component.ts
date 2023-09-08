@@ -1,6 +1,6 @@
 import { UserService } from '../services/user.Service'; // Certifique-se de que o caminho esteja correto
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,10 +20,16 @@ export class UserRegistrationComponent {
     this.registrationForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+        ]
+      ],
       confirmPassword: ['', Validators.required],
       userId: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(16)]]
-    });
+    }, { validators: this.passwordsMatchValidator() });
   }
 
   registerUser() {
@@ -31,15 +37,8 @@ export class UserRegistrationComponent {
       const username = this.registrationForm.get('username')?.value;
       const email = this.registrationForm.get('email')?.value;
       const password = this.registrationForm.get('password')?.value;
-      const confirmPassword = this.registrationForm.get('confirmPassword')?.value;
 
-      if (password !== confirmPassword) {
-        this.registrationForm.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-        this.registrationError = 'A senha e a confirmação de senha não coincidem.';
-        return; // Senha e confirmação de senha não coincidem
-      }
-
-      if (this.userService.registerUser(username, email, password, confirmPassword)) {
+      if (this.userService.registerUser(username, email, password, password)) {
         // Registro bem-sucedido, redirecione para a página do usuário
         this.router.navigate(['/user']);
       } else {
@@ -47,5 +46,16 @@ export class UserRegistrationComponent {
         this.registrationError = 'O registro falhou. Por favor, verifique suas informações.';
       }
     }
+  }
+
+  // Validador personalizado para verificar se as senhas coincidem
+  private passwordsMatchValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const password = control.get('password');
+      const confirmPassword = control.get('confirmPassword');
+      return password && confirmPassword && password.value !== confirmPassword.value
+        ? { passwordMismatch: true }
+        : null;
+    };
   }
 }
