@@ -11,70 +11,36 @@ import { HomeComponent } from './home/home.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 // Importações do Firebase
-import { FirebaseApp, provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth, Auth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore, Firestore } from '@angular/fire/firestore';
-import { provideStorage, getStorage, Storage } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire/compat'; // Importe AngularFireModule
 import { FirebaseOptions } from 'firebase/app';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { ServicesModule } from './services/services.module';
 import { environment } from 'src/environments/environment';
-import { firebaseConfig } from '../environments/environment.firebase';
 
-@NgModule({
+@NgModule( {
   declarations: [
     AppComponent,
     AnimeDetailsComponent,
     UserProfileComponent,
     UserRegistrationComponent,
     HomeComponent,
-    PaginaNaoEncontradaComponent
+    PaginaNaoEncontradaComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     ServicesModule,
+    AngularFireModule.initializeApp( environment.firebase ),
+    AngularFirestoreModule,
   ],
   providers: [
     {
       provide: 'FirebaseConfig',
       useValue: environment.firebase as FirebaseOptions,
     },
-    {
-      provide: FirebaseApp,
-      useFactory: () => {
-        return initializeFirebaseApp(environment.firebase);
-      }
-    },
-    {
-      provide: Auth,
-      useFactory: () => {
-        const auth = getAuth();
-        return auth;
-      },
-    },
-    {
-      provide: Firestore,
-      useFactory: () => {
-        const firestore = getFirestore();
-        return firestore;
-      },
-    },
-    {
-      provide: Storage,
-      useFactory: () => {
-        const storage = getStorage();
-        return storage;
-      },
-    },
   ],
-  bootstrap: [AppComponent]
-})
+  bootstrap: [ AppComponent ],
+} )
 export class AppModule { }
-
-function initializeFirebaseApp ( firebase: { projectId: string; appId: string; storageBucket: string; locationId: string; apiKey: string; authDomain: string; messagingSenderId: string; measurementId: string; } )
-{
-  throw new Error( 'Function not implemented.' );
-}
-

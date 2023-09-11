@@ -1,47 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, doc, getDoc, getDocs, DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
-import { Observable, of, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Anime } from './anime.model';
 
-interface Anime {
-  id: number;
-  title: string;
-  description: string;
-  imageUrl: string;
-  rating: number;
-}
 @Injectable()
-export class AnimeService {
-  private animeCollection = collection(this.firestore, 'animes');
+export class AnimeService
+{
+  private animeCollection: AngularFirestoreCollection<Anime>;
 
-  constructor(private firestore: Firestore) {}
+  constructor ( private firestore: AngularFirestore )
+  {
+    this.animeCollection = firestore.collection<Anime>( 'animes' );
+  }
 
-  getTopRatedAnimes(): Observable<Anime[]> {
-    try {
-      return from(getDocs(this.animeCollection)).pipe(
-        map((animeDocs: QuerySnapshot) => animeDocs.docs.map((doc) => doc.data() as Anime))
+  getTopRatedAnimes (): Observable<Anime[]>
+  {
+    try
+    {
+      return this.animeCollection.valueChanges( { idField: 'id' } ).pipe(
+        // Resto do código
       );
-    } catch (error) {
-      console.error('Erro ao buscar animes:', error);
-      return of([]); // Retorna um array vazio em caso de erro
+    } catch ( error )
+    {
+      console.error( 'Erro ao buscar animes:', error );
+      return of( [] ); // Retorna um array vazio em caso de erro
     }
   }
 
-  getAnimeDetails(animeId: number): Observable<Anime | null> {
-    try {
-      const animeDoc = doc(this.animeCollection, animeId.toString());
-      return from(getDoc(animeDoc)).pipe(
-        map((animeSnap: DocumentSnapshot) => {
-          if (animeSnap.exists()) {
-            return animeSnap.data() as Anime;
-          } else {
-            return null;
-          }
-        })
-      );
-    } catch (error) {
-      console.error('Erro ao buscar detalhes do anime:', error);
-      return of(null); // Retorna nulo em caso de erro
-    }
+  getAnimeDetails ( animeId: number ): Observable<Anime | null>
+  {
+    const animeDoc: AngularFirestoreDocument<Anime> = this.animeCollection.doc<Anime>( animeId.toString() );
+
+    return animeDoc.valueChanges().pipe(
+      map( ( animeData: Anime | undefined ) => animeData || null ),
+      catchError( ( error: any ) =>
+      {
+        console.error( 'Erro ao buscar detalhes do anime:', error );
+        return of( null ); // Retorna null em caso de erro
+      } )
+    );
   }
 }
