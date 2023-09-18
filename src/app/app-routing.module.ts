@@ -8,11 +8,10 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
   { path: 'user', component: UserProfileComponent },
   { path: 'register', component: UserRegistrationComponent },
   { path: 'anime', component: AnimeDetailsComponent },
-  // Adicione mais rotas para outras páginas aqui
+  { path: 'home', component: HomeComponent },
 
   // Rota padrão redireciona para a página inicial
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,8 +20,8 @@ const routes: Routes = [
   { path: '**', component: PaginaNaoEncontradaComponent },
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
+@NgModule( {
+  imports: [ RouterModule.forRoot( routes ) ],
+  exports: [ RouterModule ],
+} )
+export class AppRoutingModule { }

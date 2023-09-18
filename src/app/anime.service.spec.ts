@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AnimeService } from './services/anime.Service';
+import { AnimeService } from './services/anime.service';
 
-describe('AnimeService', () => {
+describe( 'AnimeService', () =>
+{
   let service: AnimeService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AnimeService);
-  });
+  beforeEach( () =>
+  {
+    TestBed.configureTestingModule( {} );
+    service = TestBed.inject( AnimeService );
+  } );
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+  it( 'should be created', () =>
+  {
+    expect( service ).toBeTruthy();
+  } );
+} );

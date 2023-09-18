@@ -21,7 +21,7 @@ import { ServicesModule } from './services/services.module';
 import { environment } from 'src/environments/environment';
 import { firebaseConfig } from '../environments/environment.firebase';
 
-@NgModule({
+@NgModule( {
   declarations: [
     AppComponent,
     AnimeDetailsComponent,
@@ -43,34 +43,38 @@ import { firebaseConfig } from '../environments/environment.firebase';
     },
     {
       provide: FirebaseApp,
-      useFactory: () => {
-        return initializeFirebaseApp(environment.firebase);
+      useFactory: () =>
+      {
+        return initializeFirebaseApp( environment.firebase );
       }
     },
     {
       provide: Auth,
-      useFactory: () => {
+      useFactory: () =>
+      {
         const auth = getAuth();
         return auth;
       },
     },
     {
       provide: Firestore,
-      useFactory: () => {
+      useFactory: () =>
+      {
         const firestore = getFirestore();
         return firestore;
       },
     },
     {
       provide: Storage,
-      useFactory: () => {
+      useFactory: () =>
+      {
         const storage = getStorage();
         return storage;
       },
     },
   ],
-  bootstrap: [AppComponent]
-})
+  bootstrap: [ AppComponent ]
+} )
 export class AppModule { }
 
 function initializeFirebaseApp ( firebase: { projectId: string; appId: string; storageBucket: string; locationId: string; apiKey: string; authDomain: string; messagingSenderId: string; measurementId: string; } )
