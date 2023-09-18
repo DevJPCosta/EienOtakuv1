@@ -3,3 +3,12 @@
   <button *ngIf="!isLoggedIn" (click)="login()">Login</button>
   <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
 </div>
+
+<div class="routes">
+  <button routerLink="/home">Home</button>
+  <button routerLink="/user">User Profile</button>
+  <button routerLink="/register">User Registration</button>
+  <button routerLink="/anime">Anime Details</button>
+</div>
+
+<router-outlet></router-outlet>
