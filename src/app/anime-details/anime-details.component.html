@@ -1,8 +1,32 @@
 <div class="anime-details" *ngIf="anime">
   <h2>{{ anime.title }}</h2>
-  <img [src]="anime.image" alt="{{ anime.title }}">
+  <img [src]="anime.imageUrl" alt="{{ anime.title }}">
   <p>{{ anime.description }}</p>
   <p>Data de Lançamento: {{ anime.releaseDate }}</p>
+  <a [routerLink]="['/anime', anime.id]">{{ anime.title }}</a>
+
   <!-- Outras informações sobre o anime -->
 </div>
+
+<!-- Adicione os elementos de filtro e pesquisa abaixo -->
+<div class="filters">
+  <label for="genreFilter">Filtrar por Gênero:</label>
+  <select id="genreFilter" [(ngModel)]="selectedGenre" (change)="applyFilters()">
+    <option value="">Todos</option>
+    <option value="Ação">Ação</option>
+    <option value="Aventura">Aventura</option>
+    <!-- Adicione outras opções de gênero aqui -->
+  </select>
+
+  <label for="ratingFilter">Filtrar por Nota:</label>
+  <input type="number" id="ratingFilter" [(ngModel)]="selectedRating" min="0" max="5" step="0.1"
+    (change)="applyFilters()">
+
+  <input type="text" placeholder="Pesquisar por nome do anime..." [(ngModel)]="searchQuery"
+    (keyup.enter)="searchAnime()">
+  <button (click)="searchAnime()">Pesquisar</button>
+
+  <button (click)="resetFilters()">Limpar Filtros</button>
+</div>
+
 <div *ngIf="!anime">Anime não encontrado.</div>

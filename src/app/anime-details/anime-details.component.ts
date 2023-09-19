@@ -1,19 +1,22 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AnimeService } from '../services/anime.service'; // Importe o AnimeService aqui
+import { AnimeService } from '../services/anime.service';
 import { ANIME_SERVICE } from '../services/anime-service.token';
 
 @Component( {
   selector: 'app-anime-details',
   templateUrl: './anime-details.component.html',
-  styleUrls: [ './anime-details.component.css' ]
+  styleUrls: [ './anime-details.component.css' ],
 } )
 export class AnimeDetailsComponent implements OnInit
 {
   anime: any;
+  selectedGenre: string = '';
+  selectedRating: number = 0; // Defina um valor numérico padrão, por exemplo, 0
+  searchQuery: string = '';
 
   constructor (
-    @Inject( ANIME_SERVICE ) private animeService: AnimeService, // Injete o AnimeService usando o token do anime
+    @Inject( ANIME_SERVICE ) private animeService: AnimeService,
     private route: ActivatedRoute
   ) { }
 
@@ -32,5 +35,39 @@ export class AnimeDetailsComponent implements OnInit
     {
       console.error( 'ID do anime não fornecido.' );
     }
+  }
+
+  applyFilters (): void
+  {
+    // Chame o serviço para buscar os animes com base nos filtros selecionados (gênero e nota)
+    // Atualize this.anime com os resultados
+    // Lembre-se de que você deve criar um método no AnimeService para buscar animes com base nos filtros
+    this.animeService
+      .filterAnimesByGenreAndRating( this.selectedGenre, this.selectedRating )
+      .subscribe( ( animes ) =>
+      {
+        this.anime = animes;
+      } );
+  }
+
+  searchAnime (): void
+  {
+    // Chame o serviço para buscar os animes com base na consulta de pesquisa
+    this.animeService.searchAnimesByName( this.searchQuery ).subscribe( ( animes ) =>
+    {
+      this.anime = animes;
+    } );
+  }
+
+  resetFilters (): void
+  {
+    this.selectedGenre = '';
+    this.selectedRating = 0; // Redefina para o valor padrão, por exemplo, 0
+    this.searchQuery = '';
+    // Chame o serviço para buscar todos os animes (sem filtros)
+    this.animeService.getAllAnimes().subscribe( ( animes ) =>
+    {
+      this.anime = animes;
+    } );
   }
 }

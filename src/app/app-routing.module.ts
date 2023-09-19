@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'user', component: UserProfileComponent },
   { path: 'register', component: UserRegistrationComponent },
   { path: 'anime', component: AnimeDetailsComponent },
+  { path: 'anime/:id', component: AnimeDetailsComponent },
   { path: 'home', component: HomeComponent },
 
   // Rota padrão redireciona para a página inicial
