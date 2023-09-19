@@ -1,66 +1,58 @@
 [
   {
+    "id": 1,
     "title": "Naruto",
     "description": "Naruto Uzumaki é um jovem ninja com o sonho de se tornar o Hokage de sua vila.",
     "imageUrl": "./imagens/naruto-classico.jpg",
-    "rating": 4.7,
-    "genre": "Ação",
-    "type": "Série"
+    "rating": 4.7
   },
   {
+    "id": 2,
     "title": "One Piece",
     "description": "Monkey D. Luffy e sua tripulação partem em busca do One Piece, o maior tesouro do mundo.",
     "imageUrl": "./imagens/one-piece.jpg",
-    "rating": 4.9,
-    "genre": "Aventura",
-    "type": "Série"
+    "rating": 4.9
   },
   {
+    "id": 3,
     "title": "Death Note",
     "description": "Um estudante encontra um caderno que permite matar qualquer pessoa cujo nome seja escrito nele.",
     "imageUrl": "./imagens/death-note.jpg",
-    "rating": 4.8,
-    "genre": "Suspense",
-    "type": "Série"
+    "rating": 4.8
   },
   {
+    "id": 4,
     "title": "My Hero Academia",
     "description": "Jovens heróis treinam para proteger o mundo de super-vilões.",
     "imageUrl": "./imagens/my-hero-academia.jpg",
-    "rating": 4.6,
-    "genre": "Ação",
-    "type": "Série"
+    "rating": 4.6
   },
   {
+    "id": 5,
     "title": "Attack on Titan",
     "description": "A humanidade luta pela sobrevivência contra gigantes humanoides canibais.",
     "imageUrl": "./imagens/attack-on-titan.webp",
-    "rating": 4.9,
-    "genre": "Ação",
-    "type": "Série"
+    "rating": 4.9
   },
   {
+    "id": 6,
     "title": "Demon Slayer",
     "description": "Um jovem se torna um caçador de demônios para vingar sua família e salvar sua irmã.",
     "imageUrl": "./imagens/demon-slayer.jpg",
-    "rating": 4.7,
-    "genre": "Ação",
-    "type": "Série"
+    "rating": 4.7
   },
   {
+    "id": 7,
     "title": "Fullmetal Alchemist: Brotherhood",
     "description": "Dois irmãos alquimistas embarcam em uma jornada para recuperar seus corpos.",
     "imageUrl": "./imagens/fullmetal-alchemist.jpg",
-    "rating": 4.8,
-    "genre": "Aventura",
-    "type": "Série"
+    "rating": 4.8
   },
   {
+    "id": 8,
     "title": "Hunter x Hunter",
     "description": "Um jovem parte em busca de seu pai e se torna um caçador de tesouros.",
     "imageUrl": "./imagens/hunter-x-hunter.jpg",
-    "rating": 4.6,
-    "genre": "Ação",
-    "type": "Série"
+    "rating": 4.6
   }
 ]
