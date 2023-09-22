@@ -12,7 +12,7 @@ export class AnimeDetailsComponent implements OnInit
 {
   anime: any;
   selectedGenre: string = '';
-  selectedRating: number = 0; // Defina um valor numérico padrão, por exemplo, 0
+  selectedRating: number = 0;
   searchQuery: string = '';
 
   constructor (
@@ -26,7 +26,7 @@ export class AnimeDetailsComponent implements OnInit
 
     if ( animeId )
     {
-      this.anime = await this.animeService.getAnimeDetails( +animeId );
+      this.anime = await this.animeService.getAnimeDetails( animeId ); // Mantenha animeId como string
       if ( !this.anime )
       {
         console.error( 'Anime não encontrado.' );
@@ -39,9 +39,9 @@ export class AnimeDetailsComponent implements OnInit
 
   applyFilters (): void
   {
-    // Chame o serviço para buscar os animes com base nos filtros selecionados (gênero e nota)
-    // Atualize this.anime com os resultados
-    // Lembre-se de que você deve criar um método no AnimeService para buscar animes com base nos filtros
+    // Certifique-se de que o AnimeService tenha um método adequado para filtrar os animes
+    // com base no gênero e na classificação. O código abaixo é um exemplo genérico.
+
     this.animeService
       .filterAnimesByGenreAndRating( this.selectedGenre, this.selectedRating )
       .subscribe( ( animes ) =>
@@ -52,7 +52,7 @@ export class AnimeDetailsComponent implements OnInit
 
   searchAnime (): void
   {
-    // Chame o serviço para buscar os animes com base na consulta de pesquisa
+    // Chame o serviço para buscar animes com base na consulta de pesquisa
     this.animeService.searchAnimesByName( this.searchQuery ).subscribe( ( animes ) =>
     {
       this.anime = animes;
@@ -62,8 +62,9 @@ export class AnimeDetailsComponent implements OnInit
   resetFilters (): void
   {
     this.selectedGenre = '';
-    this.selectedRating = 0; // Redefina para o valor padrão, por exemplo, 0
+    this.selectedRating = 0;
     this.searchQuery = '';
+
     // Chame o serviço para buscar todos os animes (sem filtros)
     this.animeService.getAllAnimes().subscribe( ( animes ) =>
     {
