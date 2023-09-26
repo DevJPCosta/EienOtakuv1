@@ -20,6 +20,7 @@ import { FirebaseOptions } from 'firebase/app';
 import { ServicesModule } from './services/services.module';
 import { environment } from 'src/environments/environment';
 import { firebaseConfig } from '../environments/environment.firebase';
+import { AnimeService } from './services/anime.service';
 
 @NgModule( {
   declarations: [
@@ -73,6 +74,7 @@ import { firebaseConfig } from '../environments/environment.firebase';
         return storage;
       },
     },
+    [ AnimeService ],
   ],
   bootstrap: [ AppComponent ]
 } )

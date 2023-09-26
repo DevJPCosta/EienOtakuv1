@@ -111,8 +111,6 @@ export class AnimeService
   }
 
   // Método para buscar animes por nome
-  // Método para buscar animes por nome
-  // Método para buscar animes por nome
   searchAnimesByName ( searchQuery: string ): Observable<Anime[]>
   {
     try
