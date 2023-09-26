@@ -1,25 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importe FormsModule aqui
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AnimeService } from '../app/services/anime.service';
+import { ANIME_SERVICE } from '../app/services/anime-service.token';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { HomeComponent } from './home/home.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
+import { FirestoreService } from './services/firestore.service'; // Atualize o caminho conforme necessário
 
 // Importações do Firebase
-import { FirebaseApp, provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth, Auth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore, Firestore } from '@angular/fire/firestore';
-import { provideStorage, getStorage, Storage } from '@angular/fire/storage';
-import { FirebaseOptions } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
-import { ServicesModule } from './services/services.module';
 import { environment } from 'src/environments/environment';
-import { firebaseConfig } from '../environments/environment.firebase';
+import { Firestore } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
+import { getAuth } from 'firebase/auth';
 
 @NgModule( {
   declarations: [
@@ -28,57 +30,65 @@ import { firebaseConfig } from '../environments/environment.firebase';
     UserProfileComponent,
     UserRegistrationComponent,
     HomeComponent,
-    PaginaNaoEncontradaComponent
+    PaginaNaoEncontradaComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, // Adicione FormsModule aqui
+    FormsModule,
     ReactiveFormsModule,
-    ServicesModule,
   ],
   providers: [
     {
-      provide: 'FirebaseConfig',
-      useValue: environment.firebase as FirebaseOptions,
+      provide: ANIME_SERVICE,
+      useClass: AnimeService,
     },
+
     {
-      provide: FirebaseApp,
-      useFactory: () =>
-      {
-        return initializeFirebaseApp( environment.firebase );
-      }
+      provide: 'FirebaseConfig',
+      useValue: environment.firebase,
     },
+    // Inicialize o Firebase diretamente, não é necessário o AngularFireModule
     {
       provide: Auth,
-      useFactory: () =>
-      {
-        const auth = getAuth();
-        return auth;
-      },
+      useFactory: () => createAuthService(),
     },
     {
       provide: Firestore,
-      useFactory: () =>
-      {
-        const firestore = getFirestore();
-        return firestore;
-      },
+      useFactory: () => createFirestoreService(),
     },
     {
       provide: Storage,
-      useFactory: () =>
-      {
-        const storage = getStorage();
-        return storage;
-      },
+      useFactory: () => createStorageService(),
     },
+    Auth,
+    FirestoreService,
+
   ],
   bootstrap: [ AppComponent ]
 } )
 export class AppModule { }
 
-function initializeFirebaseApp ( firebase: { projectId: string; appId: string; storageBucket: string; locationId: string; apiKey: string; authDomain: string; messagingSenderId: string; measurementId: string; } )
+// Função para criar o serviço Auth após a inicialização do Firebase
+function createAuthService ()
 {
-  throw new Error( 'Function not implemented.' );
+  const firebaseApp = initializeApp( environment.firebase );
+  const auth = getAuth( firebaseApp );
+  return auth;
+}
+
+// Função para criar o serviço Firestore após a inicialização do Firebase
+function createFirestoreService ()
+{
+  const firebaseApp = initializeApp( environment.firebase );
+  const firestore = getFirestore( firebaseApp );
+  return firestore;
+}
+
+// Função para criar o serviço Storage após a inicialização do Firebase
+function createStorageService ()
+{
+  const firebaseApp = initializeApp( environment.firebase );
+  const storage = getStorage( firebaseApp );
+  return storage;
 }

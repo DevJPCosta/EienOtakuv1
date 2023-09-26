@@ -4,7 +4,6 @@
   <p>{{ anime.description }}</p>
   <p>Data de Lançamento: {{ anime.releaseDate }}</p>
   <a [routerLink]="['/anime', anime.id]">{{ anime.title }}</a>
-
   <!-- Outras informações sobre o anime -->
 </div>
 
@@ -22,7 +21,7 @@
   <input type="number" id="ratingFilter" [(ngModel)]="selectedRating" min="0" max="5" step="0.1"
     (change)="applyFilters()">
 
-  <input type="text" placeholder="Pesquisar por nome do anime..." [(ngModel)]="searchQuery"
+  <input type="text" id="searchQuery" placeholder="Pesquisar por nome do anime..." [(ngModel)]="searchQuery"
     (keyup.enter)="searchAnime()">
   <button (click)="searchAnime()">Pesquisar</button>
 
