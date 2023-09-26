@@ -1,133 +1,86 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
-import { Firestore, doc, getDoc, DocumentSnapshot, DocumentData } from 'firebase/firestore';
-import { User } from 'firebase/auth';
-import { catchError, map } from 'rxjs/operators';
-import { Auth, getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; // Importe as funções necessárias do Firebase Auth
-import { initializeApp } from 'firebase/app'; // Importe a função initializeApp
-import { firebaseConfig } from 'src/environments/environment.firebase'; // Importe sua configuração do Firebase
+import { Observable, of } from 'rxjs';
 
 @Injectable()
-export class UserService
-{
-  private loggedInUser: any | null = null;
+export class UserService {
+  private loggedInUser: any;
 
-  constructor ( private firestore: Firestore )
-  {
-    // Inicialize o Firebase aqui conforme seu ambiente
-    const app = initializeApp( firebaseConfig ); // Inicialize o Firebase com sua configuração
-    const auth = getAuth( app ); // Certifique-se de inicializar o Firebase Auth corretamente
-  }
-
-  getLoggedInUser (): Observable<any | null>
-  {
-    return of( this.loggedInUser );
-  }
-
-  logoutUser (): Observable<void>
-  {
+  constructor() {
     this.loggedInUser = null;
-    return of();
   }
 
-  isLoggedIn (): boolean
-  {
-    return !!this.loggedInUser;
-  }
-
-  markAnime ( anime: string, status: string ): Observable<boolean>
-  {
-    if ( !this.isLoggedIn() )
-    {
-      return of( false );
+  registerUser(username: string, email: string, password: string, confirmPassword: string): Observable<boolean> {
+    if (password !== confirmPassword) {
+      return of(false); // Senha e confirmação de senha não são iguais
     }
 
-    // Implemente a lógica de marcação de anime aqui, incluindo validações se necessário
+    // Realize as validações adicionais necessárias, como verificar se o nome de usuário e o email já estão em uso
 
-    if ( !this.loggedInUser.animeList )
-    {
-      this.loggedInUser.animeList = [];
+    // Simule o cadastro do usuário (substitua isso por chamadas reais)
+    this.loggedInUser = {
+      id: 1,
+      username: username,
+      email: email,
+      profileImageUrl: 'user123.jpg',
+      animeList: []
+    };
+
+    return of(true); // Cadastro bem-sucedido
+  }
+
+  loginUser(username: string, password: string): Observable<boolean> {
+    // Verifique se o usuário já está logado
+    if (this.isLoggedIn()) {
+      return of(true); // Usuário já está logado
     }
 
-    this.loggedInUser.animeList.push( { title: anime, status: status } );
-    return of( true );
+    // Realize as validações de login, como verificar se o nome de usuário e senha correspondem
+
+    // Simule a verificação de credenciais (substitua isso por chamadas reais)
+    if (username === 'user123' && password === 'password123') {
+      this.loggedInUser = {
+        id: 1,
+        username: username,
+        email: 'user123@example.com',
+        profileImageUrl: 'user123.jpg',
+        animeList: []
+      };
+      return of(true); // Login bem-sucedido
+    } else {
+      return of(false); // Credenciais inválidas
+    }
   }
 
-  getMarkedAnimes (): Observable<any[]>
-  {
-    if ( !this.isLoggedIn() )
-    {
-      return of( [] );
+  logoutUser(): void {
+    this.loggedInUser = null;
+  }
+
+  isLoggedIn(): boolean {
+    return this.loggedInUser !== null;
+  }
+
+  getLoggedInUser(): Observable<any> {
+    return of(this.loggedInUser); // Simplesmente retorna o usuário logado (pode ser vazio se não estiver logado)
+  }
+
+  markAnime(anime: string, status: string): Observable<void> {
+    if (!this.isLoggedIn()) {
+      return of(); // Não é possível marcar um anime se o usuário não estiver logado
     }
 
-    return of( this.loggedInUser.animeList || [] );
+    // Realize as validações e lógica adicionais para marcar o anime para o usuário logado
+    // Por exemplo, verifique se o anime já está marcado ou se o status é válido
+
+    // Simule a marcação do anime (substitua isso por chamadas reais)
+    this.loggedInUser.animeList.push({ title: anime, status: status });
+    return of(); // Marcação bem-sucedida
   }
 
-  private getUserData ( uid: string ): Observable<any>
-  {
-    const userRef = doc( this.firestore, 'users', uid );
-
-    return from( getDoc( userRef ) ).pipe(
-      map( ( docSnapshot: DocumentSnapshot<DocumentData> ) =>
-      {
-        if ( docSnapshot.exists() )
-        {
-          return docSnapshot.data();
-        } else
-        {
-          return null;
-        }
-      } ),
-      catchError( ( error ) =>
-      {
-        console.error( 'Erro ao obter dados do usuário:', error );
-        return of( null );
-      } )
-    );
-  }
-
-  // Adicione aqui a lógica para registrar um usuário com Firebase Authentication
-  registerUser (
-    username: any,
-    email: any,
-    password: any,
-    confirmPassword: any
-  ): Observable<boolean>
-  {
-    // Implemente a lógica de registro aqui, incluindo validações
-    if ( password !== confirmPassword )
-    {
-      return of( false ); // Senhas não coincidem, retornar false
+  getMarkedAnimes(): Observable<any[]> {
+    if (!this.isLoggedIn()) {
+      return of([]); // Se nenhum usuário estiver logado, retorne uma lista vazia
     }
 
-    // Substitua o seguinte trecho pela implementação real de registro no Firebase
-    return this.createUserWithEmailAndPassword( email, password ).pipe(
-      catchError( ( error ) =>
-      {
-        console.error( 'Erro no registro:', error );
-        return of( false ); // Registro falhou, retorne false
-      } )
-    );
-  }
-
-  private createUserWithEmailAndPassword (
-    email: string,
-    password: string
-  ): Observable<boolean>
-  {
-    const auth = getAuth(); // Obtenha a instância de autenticação do Firebase
-
-    return from( createUserWithEmailAndPassword( auth, email, password ) ).pipe(
-      map( ( userCredential ) =>
-      {
-        // Faça algo com o usuário registrado, se necessário
-        return true; // Registro bem-sucedido, retorne true
-      } ),
-      catchError( ( error ) =>
-      {
-        console.error( 'Erro no registro:', error );
-        return of( false ); // Registro falhou, retorne false
-      } )
-    );
+    return of(this.loggedInUser.animeList); // Simplesmente retorna a lista de animes marcados pelo usuário
   }
 }

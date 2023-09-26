@@ -3,7 +3,7 @@ import { enableProdMode } from '@angular/core';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-if ( environment.production )
+if ( environment.firebase )
 {
   enableProdMode();
 }
@@ -12,8 +12,7 @@ async function bootstrapApp ()
 {
   try
   {
-    const platform = platformBrowserDynamic();
-    await platform.bootstrapModule( AppModule );
+    await platformBrowserDynamic().bootstrapModule( AppModule );
     console.log( 'Aplicação Angular iniciada com sucesso!' );
   } catch ( error )
   {

@@ -1,47 +1,169 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import
+{
+  Firestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  DocumentSnapshot,
+  where,
+  query,
+  orderBy,
+} from '@angular/fire/firestore';
+import { QuerySnapshot, DocumentData } from 'firebase/firestore';
+import { Observable, of, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-@Injectable( {
-  providedIn: 'root',
-} )
+interface Anime
+{
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  rating: number;
+}
+
+@Injectable()
 export class AnimeService
 {
-  constructor ( private firestore: AngularFirestore ) { }
+  private animeCollection = collection( this.firestore, 'animes' );
 
-  // Método para buscar todos os animes
-  getAllAnimes (): Observable<any[]>
+  constructor ( private firestore: Firestore ) { }
+
+  getTopRatedAnimes (): Observable<Anime[]>
   {
-    return this.firestore.collection( 'animes' ).valueChanges();
+    try
+    {
+      const animeQuery = query( this.animeCollection, orderBy( 'rating', 'desc' ) );
+
+      return from( getDocs( animeQuery ) ).pipe(
+        map( ( animeDocs: QuerySnapshot<DocumentData | unknown> ) =>
+        {
+          const animes: Anime[] = [];
+          animeDocs.forEach( ( doc ) =>
+          {
+            const animeData = doc.data() as Anime;
+            animes.push( animeData );
+          } );
+          return animes;
+        } )
+      );
+    } catch ( error )
+    {
+      console.error( 'Erro ao buscar os animes:', error );
+      return of( [] ); // Retorna um array vazio em caso de erro
+    }
   }
 
-  // Método para buscar detalhes de um anime por ID
-  getAnimeDetails ( animeId: string ): Observable<any>
+  getAnimeDetails ( animeId: number ): Observable<Anime | null>
   {
-    return this.firestore.collection( 'animes' ).doc( animeId ).valueChanges();
+    try
+    {
+      const animeDoc = doc( this.animeCollection, animeId.toString() );
+      return from( getDoc( animeDoc ) ).pipe(
+        map( ( animeSnap: DocumentSnapshot<DocumentData | unknown> ) =>
+        {
+          if ( animeSnap.exists() )
+          {
+            return animeSnap.data() as Anime;
+          } else
+          {
+            return null;
+          }
+        } )
+      );
+    } catch ( error )
+    {
+      console.error( 'Erro ao buscar detalhes do anime:', error );
+      return of( null ); // Retorna nulo em caso de erro
+    }
   }
 
-  // Método para filtrar animes por gênero e classificação
-  filterAnimesByGenreAndRating ( genre: string, minRating: number ): Observable<any[]>
+  // Método para buscar animes com base nos filtros de gênero e nota
+  filterAnimesByGenreAndRating ( genre: string, minRating: number ): Observable<Anime[]>
   {
-    return this.firestore.collection( 'animes', ( ref ) =>
-      ref.where( 'genre', '==', genre ).where( 'rating', '>=', minRating )
-    ).valueChanges();
+    try
+    {
+      const animeQuery = query(
+        this.animeCollection,
+        where( 'genre', '==', genre ),
+        where( 'rating', '>=', minRating )
+      );
+
+      return from( getDocs( animeQuery ) ).pipe(
+        map( ( animeDocs: QuerySnapshot<DocumentData | unknown> ) =>
+        {
+          const animes: Anime[] = [];
+          animeDocs.forEach( ( doc ) =>
+          {
+            const animeData = doc.data() as Anime;
+            animes.push( animeData );
+          } );
+          return animes;
+        } )
+      );
+    } catch ( error )
+    {
+      console.error( 'Erro ao filtrar os animes:', error );
+      return of( [] ); // Retorna um array vazio em caso de erro
+    }
   }
 
   // Método para buscar animes por nome
-  searchAnimesByName ( searchQuery: string ): Observable<any[]>
+  // Método para buscar animes por nome
+  // Método para buscar animes por nome
+  searchAnimesByName ( searchQuery: string ): Observable<Anime[]>
   {
-    return this.firestore.collection( 'animes', ( ref ) =>
-      ref.where( 'title', '==', searchQuery )
-    ).valueChanges();
+    try
+    {
+      const animeQuery = query(
+        this.animeCollection,
+        where( 'title', '==', searchQuery )
+      );
+
+      return from( getDocs( animeQuery ) ).pipe(
+        map( ( animeDocs: QuerySnapshot<DocumentData | unknown> ) =>
+        {
+          const animes: Anime[] = [];
+          animeDocs.forEach( ( doc ) =>
+          {
+            const animeData = doc.data() as Anime;
+            animes.push( animeData );
+          } );
+          return animes;
+        } )
+      );
+    } catch ( error )
+    {
+      console.error( 'Erro ao buscar animes por nome:', error );
+      return of( [] ); // Retorna um array vazio em caso de erro
+    }
   }
 
-  // Método para buscar os top animes
-  getTopRatedAnimes (): Observable<any[]>
+
+
+  // Método para buscar todos os animes (sem filtros)
+  getAllAnimes (): Observable<Anime[]>
   {
-    return this.firestore
-      .collection( 'animes', ( ref ) => ref.orderBy( 'rating', 'desc' ).limit( 10 ) )
-      .valueChanges();
+    try
+    {
+      return from( getDocs( this.animeCollection ) ).pipe(
+        map( ( animeDocs: QuerySnapshot<DocumentData | unknown> ) =>
+        {
+          const animes: Anime[] = [];
+          animeDocs.forEach( ( doc ) =>
+          {
+            const animeData = doc.data() as Anime;
+            animes.push( animeData );
+          } );
+          return animes;
+        } )
+      );
+    } catch ( error )
+    {
+      console.error( 'Erro ao buscar todos os animes:', error );
+      return of( [] ); // Retorna um array vazio em caso de erro
+    }
   }
 }
