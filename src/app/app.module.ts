@@ -21,6 +21,7 @@ import { ServicesModule } from './services/services.module';
 import { environment } from 'src/environments/environment';
 import { firebaseConfig } from '../environments/environment.firebase';
 import { AnimeService } from './services/anime.service';
+import { ANIME_SERVICE } from './services/anime-service.token';
 
 @NgModule( {
   declarations: [
@@ -74,7 +75,7 @@ import { AnimeService } from './services/anime.service';
         return storage;
       },
     },
-    [ AnimeService ],
+    { provide: ANIME_SERVICE, useClass: AnimeService },
   ],
   bootstrap: [ AppComponent ]
 } )
