@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importe FormsModule aqui
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,16 +12,16 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao
 
 // Importações do Firebase
 import { FirebaseApp, provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth, Auth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore, Firestore } from '@angular/fire/firestore';
-import { provideStorage, getStorage, Storage } from '@angular/fire/storage';
+import { Auth, provideAuth, getAuth } from '@angular/fire/auth';
+import { Firestore, provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { Storage, provideStorage, getStorage } from '@angular/fire/storage';
 import { FirebaseOptions } from 'firebase/app';
 
 import { ServicesModule } from './services/services.module';
 import { environment } from 'src/environments/environment';
-import { firebaseConfig } from '../environments/environment.firebase';
-import { AnimeService } from './services/anime.service';
+import { AnimeService } from './services/anime.Service';
 import { ANIME_SERVICE } from './services/anime-service.token';
+import { AuthService } from './services/auth.service'; // Importe o serviço de autenticação
 
 @NgModule( {
   declarations: [
@@ -30,12 +30,12 @@ import { ANIME_SERVICE } from './services/anime-service.token';
     UserProfileComponent,
     UserRegistrationComponent,
     HomeComponent,
-    PaginaNaoEncontradaComponent
+    PaginaNaoEncontradaComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, // Adicione FormsModule aqui
+    FormsModule,
     ReactiveFormsModule,
     ServicesModule,
   ],
@@ -49,7 +49,7 @@ import { ANIME_SERVICE } from './services/anime-service.token';
       useFactory: () =>
       {
         return initializeFirebaseApp( environment.firebase );
-      }
+      },
     },
     {
       provide: Auth,
@@ -76,12 +76,15 @@ import { ANIME_SERVICE } from './services/anime-service.token';
       },
     },
     { provide: ANIME_SERVICE, useClass: AnimeService },
+    AuthService,
+    AnimeService,
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
 } )
 export class AppModule { }
 
-function initializeFirebaseApp ( firebase: { projectId: string; appId: string; storageBucket: string; locationId: string; apiKey: string; authDomain: string; messagingSenderId: string; measurementId: string; } )
+// Função para inicializar o aplicativo Firebase
+function initializeFirebaseApp ( firebase: FirebaseOptions )
 {
-  throw new Error( 'Function not implemented.' );
+  return initializeApp( firebase );
 }

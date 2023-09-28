@@ -4,13 +4,16 @@
       <button class="button" routerLink="/home">Home</button>
     </li>
     <li>
+      <button class="button" routerLink="/anime">Anime Details</button>
+    </li>
+    <li *ngIf="isLoggedIn">
       <button class="button" routerLink="/user">User Profile</button>
     </li>
-    <li>
+    <li *ngIf="!isLoggedIn">
       <button class="button" routerLink="/register">User Registration</button>
     </li>
-    <li>
-      <button class="button" routerLink="/anime">Anime Details</button>
+    <li *ngIf="isLoggedIn">
+      <button class="button" (click)="logout()">Logout</button>
     </li>
   </ul>
 </div>

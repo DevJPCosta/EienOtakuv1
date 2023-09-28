@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { AnimeService } from '../services/anime.service';
+import { AnimeService } from '../services/anime.Service';
 import { ANIME_SERVICE } from '../services/anime-service.token';
-import { Observable } from 'rxjs/internal/Observable';
-import { from } from 'rxjs/internal/observable/from';
+import { Observable } from 'rxjs';
 
 @Component( {
   selector: 'app-home',
@@ -26,7 +25,7 @@ export class HomeComponent implements OnInit
   // Crie um novo método para buscar os top animes
   private loadTopAnimes (): void
   {
-    // Use o operador 'from' do RxJS para converter a promessa em um Observable
-    this.topAnimes$ = from( this.animeService.getTopRatedAnimes() );
+    // Use o método atualizado para buscar os top animes
+    this.topAnimes$ = this.animeService.getTopRatedAnimes();
   }
 }

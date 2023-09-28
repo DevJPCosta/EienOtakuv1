@@ -17,16 +17,29 @@ import { map } from 'rxjs/operators';
 
 interface Anime
 {
-  id: number;
+  id: string;
   title: string;
   description: string;
   imageUrl: string;
   rating: number;
+  genre: string; // Adicione o campo genre à interface Anime
 }
 
 @Injectable()
 export class AnimeService
 {
+  rateAnime ( id: any, uid: any, rating: number )
+  {
+    throw new Error( 'Method not implemented.' );
+  }
+  addComment ( id: any, uid: any, displayName: any, commentText: string )
+  {
+    throw new Error( 'Method not implemented.' );
+  }
+  markAnime ( uid: any, id: any, status: string )
+  {
+    throw new Error( 'Method not implemented.' );
+  }
   private animeCollection = collection( this.firestore, 'animes' );
 
   constructor ( private firestore: Firestore ) { }
@@ -80,8 +93,10 @@ export class AnimeService
     }
   }
 
-  // Método para buscar animes com base nos filtros de gênero e nota
-  filterAnimesByGenreAndRating ( genre: string, minRating: number ): Observable<Anime[]>
+  filterAnimesByGenreAndRating (
+    genre: string,
+    minRating: number
+  ): Observable<Anime[]>
   {
     try
     {
@@ -110,7 +125,6 @@ export class AnimeService
     }
   }
 
-  // Método para buscar animes por nome
   searchAnimesByName ( searchQuery: string ): Observable<Anime[]>
   {
     try
@@ -139,9 +153,6 @@ export class AnimeService
     }
   }
 
-
-
-  // Método para buscar todos os animes (sem filtros)
   getAllAnimes (): Observable<Anime[]>
   {
     try

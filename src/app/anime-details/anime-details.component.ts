@@ -1,22 +1,29 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AnimeService } from '../services/anime.service';
+import { AnimeService } from '../services/anime.Service';
+import { AuthService } from '../services/auth.service';
 import { ANIME_SERVICE } from '../services/anime-service.token';
+import { Observable } from 'rxjs';
 
 @Component( {
   selector: 'app-anime-details',
   templateUrl: './anime-details.component.html',
   styleUrls: [ './anime-details.component.css' ],
 } )
+
 export class AnimeDetailsComponent implements OnInit
 {
   anime: any;
   selectedGenre: string = '';
-  selectedRating: number = 0; // Defina um valor numérico padrão, por exemplo, 0
+  selectedRating: number = 0;
   searchQuery: string = '';
+  user: any; // Para armazenar informações do usuário autenticado
+  commentText: string = ''; // Para armazenar o texto do comentário
+  status: string = ''; // Para armazenar o status de marcação
 
   constructor (
-    @Inject( ANIME_SERVICE ) private animeService: AnimeService,
+    private animeService: AnimeService,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) { }
 
@@ -34,6 +41,54 @@ export class AnimeDetailsComponent implements OnInit
     } else
     {
       console.error( 'ID do anime não fornecido.' );
+    }
+
+    // Recupere informações do usuário autenticado
+    this.authService.getCurrentUser().subscribe( ( user ) =>
+    {
+      this.user = user;
+    } );
+  }
+
+  markAs ( status: string ): void
+  {
+    if ( this.user )
+    {
+      // Chame o serviço para marcar o anime para o usuário autenticado
+      this.animeService.markAnime( this.user.uid, this.anime.id, status );
+    } else
+    {
+      console.error( 'Usuário não autenticado.' );
+    }
+  }
+
+  addComment (): void
+  {
+    if ( this.user && this.commentText.trim() !== '' )
+    {
+      // Chame o serviço para adicionar um comentário ao anime
+      this.animeService.addComment(
+        this.anime.id,
+        this.user.uid,
+        this.user.displayName,
+        this.commentText
+      );
+      this.commentText = ''; // Limpe o campo de texto após adicionar o comentário
+    } else
+    {
+      console.error( 'Usuário não autenticado ou comentário vazio.' );
+    }
+  }
+
+  rateAnime ( rating: number ): void
+  {
+    if ( this.user )
+    {
+      // Chame o serviço para avaliar o anime
+      this.animeService.rateAnime( this.anime.id, this.user.uid, rating );
+    } else
+    {
+      console.error( 'Usuário não autenticado.' );
     }
   }
 
