@@ -19,10 +19,10 @@
     "@angular/platform-browser": "^12.0.0",
     "@angular/platform-browser-dynamic": "^12.0.0",
     "@angular/router": "^12.0.0",
-    "firebase": "^10.3.1",
+    "firebase": "^10.13.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.13.0"
+    "tslib": "^2.7.0",
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.0.0",
